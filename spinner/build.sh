@@ -48,11 +48,11 @@ function build_service_liferay {
 
 	cp ../../orca/templates/liferay/resources/usr/local/liferay/scripts/pre-startup/10_wait_for_dependencies.sh build/liferay/resources/usr/local/liferay/scripts/pre-startup
 
-	local liferay_image=""
+	local liferay_docker_image=""
 
 	if [ "$(git -C "${SPINNER_LIFERAY_LXC_REPOSITORY_DIR}" rev-parse --abbrev-ref HEAD)" == "master" ]
 	then
-		liferay_image=$(get_environment_descriptor "liferay-image")
+		liferay_docker_image=$(get_environment_descriptor "liferay-image")
 
 		local hotfix=$(get_environment_descriptor "hotfix")
 
@@ -63,11 +63,11 @@ function build_service_liferay {
 
 		sed -i "s/\[TO-BE-REPLACED-BY-SINGLE-CI\]/${hotfix}/g" "${SPINNER_LIFERAY_LXC_REPOSITORY_DIR}/liferay/Dockerfile.ext"
 	else
-		liferay_image=$(grep -e '^liferay.workspace.docker.image.liferay=' "${SPINNER_LIFERAY_LXC_REPOSITORY_DIR}/liferay/gradle.properties" | cut -d'=' -f2)
+		liferay_docker_image=$(grep -e '^liferay.workspace.docker.image.liferay=' "${SPINNER_LIFERAY_LXC_REPOSITORY_DIR}/liferay/gradle.properties" | cut -d'=' -f2)
 	fi
 
 	(
-		echo "FROM ${liferay_image}"
+		echo "FROM ${liferay_docker_image}"
 
 		echo "COPY resources/opt/liferay /opt/liferay"
 		echo "COPY resources/usr/local/bin /usr/local/bin"
@@ -432,7 +432,7 @@ function get_environment_descriptor {
 
 	if [ ! -f "${file}" ]
 	then
-		echo "It was not possible to find the environment-descriptor for ${LXC_ENVIRONMENT}."
+		echo "The ${file} environment-descriptor does not exist."
 
 		exit "${LIFERAY_COMMON_EXIT_CODE_BAD}"
 	fi
