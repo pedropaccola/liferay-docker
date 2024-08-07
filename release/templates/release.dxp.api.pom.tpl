@@ -7,6 +7,6 @@
 >
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.liferay.portal</groupId>
-	<artifactId>__ARTIFACT_ID__</artifactId>
+	<artifactId>release.dxp.api</artifactId>
 	<version>__PRODUCT_VERSION__-__BUILD_TIMESTAMP__</version>
 </project>
