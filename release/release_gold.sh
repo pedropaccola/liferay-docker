@@ -106,12 +106,15 @@ function main {
 function prepare_next_release_branch {
 	if [[ "${_PRODUCT_VERSION}" != *q* ]]
 	then
-		lc_log INFO "Skipping the preparation of the next release branch."
+		lc_log INFO Skipping the preparation of the next release branch.
 
 		return "${LIFERAY_COMMON_EXIT_CODE_SKIPPED}"
 	fi
 
-	rm -fr releases.json
+	if [ -e "releases.json" ]
+	then
+		rm -fr releases.json
+	fi
 
 	lc_download "https://releases.liferay.com/releases.json" releases.json
 
@@ -131,15 +134,15 @@ function prepare_next_release_branch {
 		return "${LIFERAY_COMMON_EXIT_CODE_SKIPPED}"
 	fi
 
+	local quarterly_release_branch="release-${product_group_version}"
+
 	lc_cd "${BASE_DIR}/liferay-portal-ee"
 
-	local quarterly_release_branch_name="release-${product_group_version}"
+	git branch --delete "${quarterly_release_branch}" &> /dev/null
 
-	git branch --delete "${quarterly_release_branch_name}" &> /dev/null
+	git fetch --no-tags upstream "${quarterly_release_branch}":"${quarterly_release_branch}" &> /dev/null
 
-	git fetch --no-tags upstream "${quarterly_release_branch_name}":"${quarterly_release_branch_name}" &> /dev/null
-
-	git checkout "${quarterly_release_branch_name}" &> /dev/null
+	git checkout "${quarterly_release_branch}" &> /dev/null
 
 	local next_project_version_suffix="$(echo "${_PRODUCT_VERSION}" | cut -d '.' -f 3)"
 
@@ -151,7 +154,7 @@ function prepare_next_release_branch {
 
 	git commit -m "Prep next"
 
-	git push upstream "${quarterly_release_branch_name}"
+	git push upstream "${quarterly_release_branch}"
 
 	if [ "${?}" -ne 0 ]
 	then
