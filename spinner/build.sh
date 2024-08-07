@@ -63,7 +63,7 @@ function build_service_liferay {
 
 		sed -i "s/\[TO-BE-REPLACED-BY-SINGLE-CI\]/${hotfix}/g" "${SPINNER_LIFERAY_LXC_REPOSITORY_DIR}/liferay/Dockerfile.ext"
 	else
-		liferay_docker_image=$(grep -e '^liferay.workspace.docker.image.liferay=' "${SPINNER_LIFERAY_LXC_REPOSITORY_DIR}/liferay/gradle.properties" | cut -d'=' -f2)
+		liferay_docker_image=$(grep -e '^liferay.workspace.docker.image.liferay=' "${SPINNER_LIFERAY_LXC_REPOSITORY_DIR}/liferay/gradle.properties" | cut -d '=' -f 2)
 	fi
 
 	(
@@ -437,7 +437,7 @@ function get_environment_descriptor {
 		exit "${LIFERAY_COMMON_EXIT_CODE_BAD}"
 	fi
 
-	echo "$(grep -e "\"${1}\":" "${file}" | cut -d'"' -f4)"
+	echo "$(grep -e "\"${1}\":" "${file}" | cut -d '"' -f 4)"
 }
 
 function main {
