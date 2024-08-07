@@ -15,20 +15,9 @@ function assert_equals {
 			continue
 		fi
 
-		if [ -f "${parameters[${index}]}" ] &&
-		   [ -f "${parameters[${index} + 1]}" ]
+		if [ "${parameters[${index}]}" == "${parameters[${index} + 1]}" ]
 		then
-			diff "${parameters[${index}]}" "${parameters[${index} + 1]}"
-
-			if [ "${?}" -eq 0 ]
-			then
-				assertion_result="true"
-			fi
-		else
-			if [ "${parameters[${index}]}" == "${parameters[${index} + 1]}" ]
-			then
-				assertion_result="true"
-			fi
+			assertion_result="true"
 		fi
 	done
 
