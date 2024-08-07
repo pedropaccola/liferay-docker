@@ -1,5 +1,3 @@
-#!/bin/bash
-
 function configure_jdk {
 	JAVA_HOME=/usr/lib/jvm/${JAVA_VERSION}
 	PATH=/usr/lib/jvm/${JAVA_VERSION}/bin/:${PATH}
