@@ -13,6 +13,6 @@ mkdir -p "${_PROMOTION_DIR}"
 
 lc_cd "${_PROMOTION_DIR}"
 
-generate_releases_json "regenerate"
+regenerate_releases_json
 
 upload_releases_json
