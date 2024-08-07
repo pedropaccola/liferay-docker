@@ -1,33 +1,33 @@
 #!/bin/bash
 
 function assert_equals {
-	local arguments=()
+	local parameters=()
 
-	for argument in ${@}
+	for parameter in ${@}
 	do
-		arguments+=(${argument})
+		parameters+=(${parameter})
 	done
 
 	local assertion_result="false"
 
-	for index in ${!arguments[@]}
+	for index in ${!parameters[@]}
 	do
 		if [ $((index % 2)) -ne 0 ]
 		then
 			continue
 		fi
 
-		if [ -f "${arguments[${index}]}" ] &&
-		   [ -f "${arguments[${index} + 1]}" ]
+		if [ -f "${parameters[${index}]}" ] &&
+		   [ -f "${parameters[${index} + 1]}" ]
 		then
-			diff "${arguments[${index}]}" "${arguments[${index} + 1]}"
+			diff "${parameters[${index}]}" "${parameters[${index} + 1]}"
 
 			if [ "${?}" -eq 0 ]
 			then
 				assertion_result="true"
 			fi
 		else
-			if [ "${arguments[${index}]}" == "${arguments[${index} + 1]}" ]
+			if [ "${parameters[${index}]}" == "${parameters[${index} + 1]}" ]
 			then
 				assertion_result="true"
 			fi
