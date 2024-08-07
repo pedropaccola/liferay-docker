@@ -3,7 +3,6 @@
 source _liferay_common.sh
 
 JIRA_TOKEN=""
-JIRA_USER=""
 SLACK_WEB_HOOK_URL=""
 
 function main {
@@ -27,7 +26,7 @@ function main {
 			--request GET \
 			--retry 3 \
 			--silent \
-			--user "${JIRA_USER}:${JIRA_TOKEN}")
+			--user "jira-cloud-enterprisereleasehu@liferay.com:${JIRA_TOKEN}")
 
 	if [ $? -ne 0 ]
 	then
